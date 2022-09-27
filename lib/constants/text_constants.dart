@@ -1,0 +1,25 @@
+import 'package:flutter/material.dart';
+
+const kUserIDisEmpty = 'UserID is empty';
+const kWhatdoPeopleCallYou = 'What do people call you?';
+const kEnterYourUserID = 'Enter your UserID';
+const kPasswordIsEmpty = 'Password is empty';
+const kPasteImageURL = 'Paste an image URL for your profile photo';
+const kURLforProfilePhoto = "URL for profile photo";
+const kUserAlreadyExists = Text("User already exists, still continue?");
+const kNeitherInitialNorLoadedState = Text("neither initial nor loaded");
+const kStartChatting = Text("Start chatting");
+const kWhatsUp = Text("WhatsUp");
+const kChats = "CHATS";
+const kStatus = "STATUS";
+const kCalls = "CALLS";
+const kInitialMessageState = Text("this is INITTIAL MESSAGE STATE");
+const kYouHaventChattedYet = "You haven't chatted yet";
+const kStartChattingg = Text("Start Chatting");
+const kWelcome = "Welcome ";
+const kLastChat = Text("last chat");
+const kErrorOccured = "ERROR OCCURED!";
+const kYourMessagesAreLoading = "You messages are loading";
+const kTypeMessage = 'Type message ...';
+const kNo = Text("No");
+const kYes = Text("Yes");
