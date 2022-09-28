@@ -9,13 +9,6 @@ class FetchMessagesEvent extends MessageEvent {
   FetchMessagesEvent(this.receiver, this.sender);
 }
 
-class ReceiveMessageEvent extends MessageEvent {
-  final MessagesModel messages;
-  String? senderr;
-  String? receiverr;
-  ReceiveMessageEvent({required this.messages, this.senderr, this.receiverr});
-}
-
 class SendMessageEvent extends MessageEvent {
   String? senderr;
    String? receiverr;

@@ -5,6 +5,7 @@ import '../bloc/user_details_bloc/user_fetch_bloc.dart';
 import '../constants/color_constants.dart';
 import '../constants/text_constants.dart';
 import '../constants/textstyles_constants.dart';
+import '../data/message_details/post_msgs_data.dart';
 
 class StartChatting extends StatelessWidget {
   String userName;
@@ -52,10 +53,8 @@ class StartChatting extends StatelessWidget {
                         const SizedBox(
                           height: 50,
                         ),
-                        const Text(
-                          kYouHaventChattedYet,
-                          style: kYouHaventChattedYetStyle
-                        ),
+                        const Text(kYouHaventChattedYet,
+                            style: kYouHaventChattedYetStyle),
                         const SizedBox(
                           height: 20,
                         ),
@@ -123,23 +122,22 @@ class StartChatting extends StatelessWidget {
                                           padding: const EdgeInsets.all(0),
                                           child: ClipOval(
                                             child: SizedBox.fromSize(
-                                              size: const Size.fromRadius(
-                                                  30),
+                                              size: const Size.fromRadius(30),
                                               child: Image.network(
                                                   state.chatlist[index].photo,
                                                   fit: BoxFit.cover),
                                             ),
                                           ),
                                         ),
-                                        title: Text(
-                                          state.chatlist[index].name,
-                                          style: kChatlistUsernameBoldStyle),
+                                        title: Text(state.chatlist[index].name,
+                                            style: kChatlistUsernameBoldStyle),
                                         subtitle: kLastChat,
                                         trailing: const Text(
                                           "9:50 AM",
                                           style: TextStyle(fontSize: 12),
                                         ),
-                                        onTap: () {
+                                        onTap: () async{
+                                          await postMessages(userName, '' ,state.chatlist[index].name );
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(

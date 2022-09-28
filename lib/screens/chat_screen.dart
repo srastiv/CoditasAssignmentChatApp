@@ -123,11 +123,13 @@ class ChatScreen extends StatelessWidget {
               builder: (context, state) {
                 if (state is MessageInitialState) {
                   const Text(
-                      "yeap, your api didnt load msgs here, this is the inital state");
+                      "yeap, your api didnt load msgs, this is the inital state");
 
                   BlocProvider.of<MessageBloc>(context).add(
-                    FetchMessagesEvent(state.sender, state.receiver),
+                    //FetchMessagesEvent(state.senderr, state.receiverr),
+                    FetchMessagesEvent(messageBodyElement.name, userName),
                   );
+                  print("the userName is : $userName");
                   return const Center(
                     child: Text(
                       kYourMessagesAreLoading,
@@ -135,21 +137,20 @@ class ChatScreen extends StatelessWidget {
                     ),
                   );
                 } else if (state is MessagesLoadedState) {
-                  // BlocProvider.of<MessageBloc>(context).add(
-                  //   FetchMessagesEvent(state.receiverr, state.senderr),
-                  //   // state.messages
-                  // );
+                  print(
+                      "state.sender is ${state.senderr} and state.receiver is ${state.receiverr}");
+
                   return Column(
                     children: [
                       Container(
                         height: 610,
-                        padding: EdgeInsets.all(2),
+                        padding: const EdgeInsets.all(2),
                         child: ListView.separated(
                           itemCount: state
                               .messages
                               .senderReceiverToMessagesMap[
                                   state.senderr + state.receiverr]!
-                              .length, //["JohnJakiro"]
+                              .length,
                           separatorBuilder: (context, index) {
                             return const Divider();
                           },
@@ -303,17 +304,7 @@ class ChatScreen extends StatelessWidget {
                             padding: const EdgeInsets.all(0),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              gradient:
-                                  // messageController.text.length == 0 ||
-                                  //         messageController.text == ' '
-                                  //     ?
-                                  //      const LinearGradient(
-                                  //         begin: Alignment.topLeft,
-                                  //         end: Alignment.bottomRight,
-                                  //         colors: [kGrey, kChatBubbleGrey],
-                                  //       )
-                                  //     :
-                                  const LinearGradient(
+                              gradient: const LinearGradient(
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                                 colors: [kGreen, kBrightGreen],
@@ -375,9 +366,3 @@ class ChatScreen extends StatelessWidget {
     );
   }
 }
-
-// {
-//       "id": "2",
-//       "name": "Mark",
-//       "photo": "https://i.pinimg.com/originals/3c/c4/8f/3cc48f0d3c345afbd19c963623395ed2.jpg"
-//     },
