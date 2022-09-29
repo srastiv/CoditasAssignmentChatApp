@@ -17,25 +17,41 @@ postMessages(String sender, String message, String receiver) async {
       debugPrint(
         jsonData.containsKey(sender + receiver).toString(),
       );
+
       Map<String, List<Message>> newChat = {};
-      if (!(jsonData.containsKey(sender + receiver))) {
+      if (!(jsonData.containsKey(sender + receiver)) 
+      &&
+          !(jsonData.containsKey(receiver + sender)))
+           {
         newChat = {(sender + receiver): []};
       }
 
       // Map<String, List<Message>> newChat = {(sender + receiver): []};
+
       newChat.forEach((key, value) {
         print("the keys in NEWCHAT are: $key");
       });
 
-      if (!messagesModel.senderReceiverToMessagesMap
-          .containsKey(sender + receiver)) {
+      if (((!messagesModel.senderReceiverToMessagesMap
+              .containsKey(sender + receiver))) ||
+          ((!messagesModel.senderReceiverToMessagesMap
+              .containsKey(receiver + sender)))) {
         messagesModel.senderReceiverToMessagesMap.addAll(newChat);
       }
 
       /// appending messages
-      List<Message> messageList =
-          messagesModel.senderReceiverToMessagesMap[(sender + receiver)]!;
-      print("sender $sender and receiver $receiver");
+      List<Message> messageList = [];
+
+      if (!messagesModel.senderReceiverToMessagesMap
+          .containsKey(sender + receiver)) {
+        messageList =
+            messagesModel.senderReceiverToMessagesMap[(receiver + sender)]!;
+      } else {
+        messageList =
+            messagesModel.senderReceiverToMessagesMap[(sender + receiver)]!;
+      }
+
+      //   print("sender $sender and receiver $receiver");
       messageList.add(
         Message(senderName: sender, message: message),
       );
@@ -50,8 +66,8 @@ postMessages(String sender, String message, String receiver) async {
       messagesModel.senderReceiverToMessagesMap.addAll(newChat);
       // }
 
-      print(
-          " messagesModel.senderReceiverToMessagesMap ${messagesModel.senderReceiverToMessagesMap}");
+      // print(
+      //     " messagesModel.senderReceiverToMessagesMap ${messagesModel.senderReceiverToMessagesMap}");
 
       /// appending map
 
@@ -66,24 +82,6 @@ postMessages(String sender, String message, String receiver) async {
   }
 }
 
-
-      ///appending keys
-      // List<String> senderReceiverKeysList = [];
-      // String senderPlusReceiverKey = sender + receiver;
-      // print(senderPlusReceiverKey);
-      // messagesModel.senderReceiverToMessagesMap.forEach((key, value) {
-      //   senderReceiverKeysList.add(key);
-      // });
-      // print("KEYS LIST: $senderReceiverKeysList");
-      // messagesModel.senderReceiverToMessagesMap.forEach((key, value) {
-      //   print('key is $key');
-      // });
-
-      ///appending keys
-     
-     
-     
-      
 ///body: jsonEncode(),
         // {
         //   (sender + receiver):

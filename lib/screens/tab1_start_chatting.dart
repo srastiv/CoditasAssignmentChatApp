@@ -1,3 +1,4 @@
+import 'package:chatapp/bloc/message_bloc/message_bloc.dart';
 import 'package:chatapp/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -136,8 +137,10 @@ class StartChatting extends StatelessWidget {
                                           "9:50 AM",
                                           style: TextStyle(fontSize: 12),
                                         ),
-                                        onTap: () async{
-                                          await postMessages(userName, '' ,state.chatlist[index].name );
+                                        onTap: () async {
+                                          await postMessages(userName, '',
+                                              state.chatlist[index].name);
+
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(

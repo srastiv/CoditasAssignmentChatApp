@@ -30,46 +30,47 @@ class WhatsUpTabs extends StatelessWidget {
                         fontSize: 30),
                   ),
                 ),
-                const SizedBox(width: 130),
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.all(1),
-                    height: 10,
-                    width: 20,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: kLightGreen,
-                    ),
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.search,
-                        color: kGreen,
+                const SizedBox(width: 100),
+                Row(
+                  children: [
+                    Container(
+                      height: 40,
+                      width: 40,
+                      padding: const EdgeInsets.all(1),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: kLightGreen,
+                      ),
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.search,
+                          color: kGreen,
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.all(1),
-                    height: 20,
-                    width: 20,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: kLightGreen,
+                    const SizedBox(
+                      width: 10,
                     ),
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.menu,
-                        color: kGreen,
+                    Container(
+                      height: 40,
+                      width: 40,
+                      padding: const EdgeInsets.all(1),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: kLightGreen,
+                      ),
+                      child: IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.menu,
+                          color: kGreen,
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
+                const SizedBox(width: 20),
               ],
               backgroundColor: Colors.white,
               elevation: 1,

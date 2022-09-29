@@ -23,3 +23,4 @@ const kYourMessagesAreLoading = "You messages are loading";
 const kTypeMessage = 'Type message ...';
 const kNo = Text("No");
 const kYes = Text("Yes");
+const kSnapshotHasError = Text("Snapshot Has Error");

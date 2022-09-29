@@ -4,6 +4,7 @@ import 'package:chatapp/screens/authentication_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'bloc/user_details_bloc/user_fetch_bloc.dart';
+import 'constants/text_constants.dart';
 import 'data/user_details/user_details_model.dart';
 
 void main() {
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
                 return UserAuthentication();
                 // WhatsUpTabs();
               } else if (snapshot.hasError) {
-                return const Text("SNAPSHOT HAS ERROR");
+                return kSnapshotHasError;
               } else {
                 return const Center(
                   child: CircularProgressIndicator(),

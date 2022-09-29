@@ -63,10 +63,13 @@ class ChatScreen extends StatelessWidget {
                         fontSize: 18,
                         fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 45),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Container(
+                        height: 40,
+                        width: 40,
                         padding: const EdgeInsets.all(0),
                         decoration: BoxDecoration(
                             color: kLightGreen,
@@ -80,7 +83,12 @@ class ChatScreen extends StatelessWidget {
                           ),
                         ),
                       ),
+                      const SizedBox(
+                        width: 10,
+                      ),
                       Container(
+                        height: 40,
+                        width: 40,
                         padding: const EdgeInsets.all(0),
                         decoration: BoxDecoration(
                             color: kLightGreen,
@@ -94,7 +102,12 @@ class ChatScreen extends StatelessWidget {
                           ),
                         ),
                       ),
+                      const SizedBox(
+                        width: 10,
+                      ),
                       Container(
+                        height: 40,
+                        width: 40,
                         padding: const EdgeInsets.all(0),
                         decoration: BoxDecoration(
                             color: kLightGreen,
@@ -119,17 +132,17 @@ class ChatScreen extends StatelessWidget {
             /// THE CHAT BODY STARTS FROM HERE
             ///
             ///
+          
             BlocBuilder<MessageBloc, MessageState>(
               builder: (context, state) {
                 if (state is MessageInitialState) {
                   const Text(
                       "yeap, your api didnt load msgs, this is the inital state");
-
                   BlocProvider.of<MessageBloc>(context).add(
                     //FetchMessagesEvent(state.senderr, state.receiverr),
                     FetchMessagesEvent(messageBodyElement.name, userName),
                   );
-                  print("the userName is : $userName");
+           //       print("the userName is : $userName");
                   return const Center(
                     child: Text(
                       kYourMessagesAreLoading,
@@ -137,10 +150,10 @@ class ChatScreen extends StatelessWidget {
                     ),
                   );
                 } else if (state is MessagesLoadedState) {
-                  print(
-                      "state.sender is ${state.senderr} and state.receiver is ${state.receiverr}");
-
+                  // print(
+                  //     "state.sender is ${state.senderr} and state.receiver is ${state.receiverr}");
                   return Column(
+                    
                     children: [
                       Container(
                         height: 610,
@@ -168,7 +181,21 @@ class ChatScreen extends StatelessWidget {
                               padding: const EdgeInsets.only(
                                   top: 15, left: 15, bottom: 10, right: 15),
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
+                                  borderRadius: state
+                                              .messages
+                                              .senderReceiverToMessagesMap[
+                                                  state.senderr +
+                                                      state.receiverr]![index]
+                                              .senderName ==
+                                          userName
+                                      ? const BorderRadius.only(
+                                          topRight: Radius.circular(30),
+                                          topLeft: Radius.circular(10),
+                                        )
+                                      : const BorderRadius.only(
+                                          topLeft: Radius.circular(30),
+                                          topRight: Radius.circular(10),
+                                        ),
                                   color: state
                                               .messages
                                               .senderReceiverToMessagesMap[
@@ -189,49 +216,51 @@ class ChatScreen extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.end,
                                       children: [
-                                        Text(state
-                                            .messages
-                                            .senderReceiverToMessagesMap[
-                                                state.senderr +
-                                                    state.receiverr]![index]
-                                            .message
-                                            .toString()),
+                                        Text(
+                                          state
+                                              .messages
+                                              .senderReceiverToMessagesMap[
+                                                  state.senderr +
+                                                      state.receiverr]![index]
+                                              .message
+                                              .toString(),
+                                        ),
                                         const SizedBox(height: 5),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.end,
-                                          // mainAxisSize: MainAxisSize.max,
                                           children: const [
                                             Text(
                                               "9:45 AM",
                                               style: TextStyle(color: kGrey),
                                             ),
                                           ],
-                                        )
+                                        ),
                                       ],
                                     )
                                   : Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(state
-                                            .messages
-                                            .senderReceiverToMessagesMap[
-                                                state.senderr +
-                                                    state.receiverr]![index]
-                                            .message
-                                            .toString()),
+                                        Text(
+                                          state
+                                              .messages
+                                              .senderReceiverToMessagesMap[
+                                                  state.senderr +
+                                                      state.receiverr]![index]
+                                              .message
+                                              .toString(),
+                                        ),
                                         Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.start,
-                                          // mainAxisSize: MainAxisSize.max,
                                           children: const [
                                             Text(
                                               "9:45 AM",
                                               style: TextStyle(color: kGrey),
                                             ),
                                           ],
-                                        )
+                                        ),
                                       ],
                                     ),
                             );
@@ -242,6 +271,7 @@ class ChatScreen extends StatelessWidget {
                         children: [
                           Expanded(
                             child: TextField(
+                              maxLines: 1,
                               controller: messageController,
                               decoration: InputDecoration(
                                 prefixIcon: const Icon(
@@ -299,7 +329,7 @@ class ChatScreen extends StatelessWidget {
                             width: 10,
                           ),
                           Container(
-                            height: 40,
+                            height: 55,
                             width: 50,
                             padding: const EdgeInsets.all(0),
                             decoration: BoxDecoration(
