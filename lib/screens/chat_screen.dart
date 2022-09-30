@@ -150,28 +150,27 @@ class ChatScreen extends StatelessWidget {
                     ),
                   );
                 } else if (state is MessagesLoadedState) {
-                  print(
-                      "state.sender is ${state.senderr} and state.receiver is ${state.receiverr}");
                   return Column(
                     children: [
                       Container(
-                        height: 610,
+                        height: 589,
                         padding: const EdgeInsets.all(2),
                         child: ListView.separated(
-                          itemCount: state
-                              .messages
-                              .conversationsMap[
-                                  state.senderr + state.receiverr]!
+                          itemCount: state.messages
+                              .getConversation(state.senderr, state.receiverr)
+                              .values
+                              .first
                               .length,
                           separatorBuilder: (context, index) {
                             return const Divider();
                           },
                           itemBuilder: (context, index) {
                             return Container(
-                              margin: state
-                                          .messages
-                                          .conversationsMap[state.senderr +
-                                              state.receiverr]![index]
+                              margin: state.messages
+                                          .getConversation(
+                                              state.senderr, state.receiverr)
+                                          .values
+                                          .first[index]
                                           .senderName ==
                                       userName
                                   ? const EdgeInsets.only(left: 40)
@@ -179,10 +178,11 @@ class ChatScreen extends StatelessWidget {
                               padding: const EdgeInsets.only(
                                   top: 15, left: 15, bottom: 10, right: 15),
                               decoration: BoxDecoration(
-                                  borderRadius: state
-                                              .messages
-                                              .conversationsMap[state.senderr +
-                                                  state.receiverr]![index]
+                                  borderRadius: state.messages
+                                              .getConversation(state.senderr,
+                                                  state.receiverr)
+                                              .values
+                                              .first[index]
                                               .senderName ==
                                           userName
                                       ? const BorderRadius.only(
@@ -193,18 +193,20 @@ class ChatScreen extends StatelessWidget {
                                           topLeft: Radius.circular(30),
                                           topRight: Radius.circular(10),
                                         ),
-                                  color: state
-                                              .messages
-                                              .conversationsMap[state.senderr +
-                                                  state.receiverr]![index]
+                                  color: state.messages
+                                              .getConversation(state.senderr,
+                                                  state.receiverr)
+                                              .values
+                                              .first[index]
                                               .senderName ==
                                           userName
                                       ? kLightGreen
                                       : kChatBubbleGrey),
-                              child: state
-                                          .messages
-                                          .conversationsMap[state.senderr +
-                                              state.receiverr]![index]
+                              child: state.messages
+                                          .getConversation(
+                                              state.senderr, state.receiverr)
+                                          .values
+                                          .first[index]
                                           .senderName ==
                                       userName
                                   ? Column(
@@ -212,10 +214,11 @@ class ChatScreen extends StatelessWidget {
                                           CrossAxisAlignment.end,
                                       children: [
                                         Text(
-                                          state
-                                              .messages
-                                              .conversationsMap[state.senderr +
-                                                  state.receiverr]![index]
+                                          state.messages
+                                              .getConversation(state.senderr,
+                                                  state.receiverr)
+                                              .values
+                                              .first[index]
                                               .message
                                               .toString(),
                                         ),
@@ -237,10 +240,11 @@ class ChatScreen extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          state
-                                              .messages
-                                              .conversationsMap[state.senderr +
-                                                  state.receiverr]![index]
+                                          state.messages
+                                              .getConversation(state.senderr,
+                                                  state.receiverr)
+                                              .values
+                                              .first[index]
                                               .message
                                               .toString(),
                                         ),
