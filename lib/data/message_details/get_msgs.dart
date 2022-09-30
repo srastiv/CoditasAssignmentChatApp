@@ -12,11 +12,8 @@ Future<MessagesModel> getMessages(String sender, String receiver) async {
       String getData = getResponse.body;
 
       var jsonData = jsonDecode(getData);
-      //var messagesBetweenSenderReceiver = jsonData[(sender + receiver)];
       var getResult = MessagesModel.fromJson(jsonData);
 
-      //debugPrint(jsonData[(sender + receiver)].toString());
-      //debugPrint("GET MESSAGE RESULT: ${getResult.toString()}");
       return getResult;
     }
   } catch (error) {

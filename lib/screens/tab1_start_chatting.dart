@@ -1,4 +1,3 @@
-import 'package:chatapp/bloc/message_bloc/message_bloc.dart';
 import 'package:chatapp/screens/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

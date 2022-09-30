@@ -3,9 +3,9 @@ import 'dart:convert';
 
 class MessagesModel {
   MessagesModel({
-    required this.senderReceiverToMessagesMap,
+    required this.conversationsMap,
   });
-  final Map<String, List<Message>> senderReceiverToMessagesMap;
+  final Map<String, List<Message>> conversationsMap;
 
   //factory MessagesModel.fromJSONArray(List<Message> sendReceive) => MessagesModel(messagesBetweenSenderReceiver: sendReceive);
 
@@ -15,28 +15,62 @@ class MessagesModel {
   // String toRawJson() => json.encode(toJson());
 
   factory MessagesModel.fromJson(Map<String, dynamic> json) {
-  //  print("json is $json");
     Map<String, List<Message>> tempSendertoReceiverMessagesMap = {};
     var jsonKeys = json.keys;
     for (var key in jsonKeys) {
       var jsonMessageList = json[key];
       var messageList = fromDynamicMessageList(jsonMessageList);
       tempSendertoReceiverMessagesMap[key] = messageList;
-      //print("LIST<MESSAGE> MESSAGE LIST : ${messageList}");
     }
-    //print("tempSendertoReceiverMessagesMap: ${tempSendertoReceiverMessagesMap}");
-    return MessagesModel(
-        senderReceiverToMessagesMap: tempSendertoReceiverMessagesMap);
+
+    return MessagesModel(conversationsMap: tempSendertoReceiverMessagesMap);
   }
   static List<Message> fromDynamicMessageList(dynamic jsonMesssageList) {
-    //print("DYNAMIC JSONMESSAGELIST : $jsonMesssageList");
     List<Message> listOfMessages = [];
 
     for (var jsonMessage in jsonMesssageList) {
       listOfMessages.add(Message.fromJson(jsonMessage));
     }
-    //print("LIST<MESSAGE> LISTOFMESSAGES : ${listOfMessages}");
+
     return listOfMessages;
+  }
+
+  void addToConversation(String sender, String receiver, Message message) {
+    String key1 = sender + receiver;
+    String key2 = receiver + sender;
+    bool containsKey1 = conversationsMap.containsKey(key1);
+    bool containsKey2 = conversationsMap.containsKey(key2);
+
+    if (containsKey1) {
+      List<Message> existingMessages = conversationsMap[key1]!;
+      existingMessages.add(message);
+      conversationsMap[key1] = existingMessages;
+      return;
+    }
+    if (containsKey2) {
+      List<Message> existingMessages = conversationsMap[key2]!;
+      existingMessages.add(message);
+      conversationsMap[key2] = existingMessages;
+       return;
+    }
+    conversationsMap[key1] = [message];
+    //throw Exception("Expected atleast one of the keys to be present");
+  }
+
+  Map<String, List<Message>> getConversation(String sender, String receiver) {
+    String key1 = sender + receiver;
+    String key2 = receiver + sender;
+    bool containsKey1 = conversationsMap.containsKey(key1);
+    bool containsKey2 = conversationsMap.containsKey(key2);
+
+    if (containsKey1) {
+      return {key1: conversationsMap[key1]!};
+    }
+    if (containsKey2) {
+      return {key2: conversationsMap[key2]!};
+    }
+
+    throw Exception("Expected atleast one of the keys to be present");
   }
 
   // Map<String, dynamic> toJson() => {

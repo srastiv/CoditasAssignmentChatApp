@@ -8,7 +8,7 @@ import 'tab2_user_status.dart';
 import 'tab3_user_calls.dart';
 
 class WhatsUpTabs extends StatelessWidget {
-  String userName;
+ String userName;
   WhatsUpTabs(this.userName);
 
   @override

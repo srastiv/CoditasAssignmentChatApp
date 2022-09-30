@@ -5,8 +5,6 @@ import 'package:http/http.dart' as http;
 
 postMessages(String sender, String message, String receiver) async {
   try {
-    /// get
-
     var getResponse = await http.get(
       Uri.parse("http://127.0.0.1:3000/messagesBetweenTwoUsers"),
     );
@@ -14,66 +12,59 @@ postMessages(String sender, String message, String receiver) async {
       var jsonData = jsonDecode(getResponse.body);
       var messagesModel = MessagesModel.fromJson(jsonData);
 
-      debugPrint(
-        jsonData.containsKey(sender + receiver).toString(),
-      );
+      Message newMessage = Message(senderName: sender, message: message);
+      messagesModel.addToConversation(sender, receiver, newMessage);
 
-      Map<String, List<Message>> newChat = {};
-      if (!(jsonData.containsKey(sender + receiver)) 
-      &&
-          !(jsonData.containsKey(receiver + sender)))
-           {
-        newChat = {(sender + receiver): []};
-      }
+      // debugPrint(
+      //   jsonData.containsKey(sender + receiver).toString(),
+      // );
 
-      // Map<String, List<Message>> newChat = {(sender + receiver): []};
-
-      newChat.forEach((key, value) {
-        print("the keys in NEWCHAT are: $key");
-      });
-
-      if (((!messagesModel.senderReceiverToMessagesMap
-              .containsKey(sender + receiver))) ||
-          ((!messagesModel.senderReceiverToMessagesMap
-              .containsKey(receiver + sender)))) {
-        messagesModel.senderReceiverToMessagesMap.addAll(newChat);
-      }
-
-      /// appending messages
-      List<Message> messageList = [];
-
-      if (!messagesModel.senderReceiverToMessagesMap
-          .containsKey(sender + receiver)) {
-        messageList =
-            messagesModel.senderReceiverToMessagesMap[(receiver + sender)]!;
-      } else {
-        messageList =
-            messagesModel.senderReceiverToMessagesMap[(sender + receiver)]!;
-      }
-
-      //   print("sender $sender and receiver $receiver");
-      messageList.add(
-        Message(senderName: sender, message: message),
-      );
-
-      /// appending messages
-
-      /// appending map
-      // Map<String, List<Message>>
-      newChat = {(sender + receiver): messageList};
-
-      // if (messagesModel.senderReceiverToMessagesMap.isEmpty) {
-      messagesModel.senderReceiverToMessagesMap.addAll(newChat);
+      // Map<String, List<Message>> newChat = {};
+      // if (!(jsonData.containsKey(sender + receiver)) &&
+      //     !(jsonData.containsKey(receiver + sender))) {
+      //   newChat = {(sender + receiver): []};
       // }
 
-      // print(
-      //     " messagesModel.senderReceiverToMessagesMap ${messagesModel.senderReceiverToMessagesMap}");
+      // newChat.forEach((key, value) {
+      //   print("the keys in NEWCHAT are: $key");
+      // });
+
+      // if ((!(messagesModel.conversationsMap.containsKey(sender + receiver))) &&
+      //     (!(messagesModel.conversationsMap.containsKey(receiver + sender)))) {
+      //   messagesModel.conversationsMap.addAll(newChat);
+      // }
+
+      // /// appending messages
+      // List<Message> messageList = [];
+
+      // if (!(messagesModel.conversationsMap.containsKey(sender + receiver))) {
+      //   messageList = messagesModel.conversationsMap[(receiver + sender)]!;
+      // } else {
+      //   messageList = messagesModel.conversationsMap[(sender + receiver)]!;
+      // }
+
+      // messageList.add(
+      //   Message(senderName: sender, message: message),
+      // );
+      // debugPrint(
+      //   jsonData.containsKey(sender + receiver).toString(),
+      // );
+
+      // /// appending messages
+
+      // /// appending map
+      // if (!(messagesModel.conversationsMap.containsKey(sender + receiver)) ||
+      //     !(messagesModel.conversationsMap.containsKey(receiver + sender))) {
+      //   newChat = {(sender + receiver): messageList};
+      //   messagesModel.conversationsMap.addAll(newChat);
+      // }
+      // messagesModel.conversationsMap[sender + receiver] = messageList;
 
       /// appending map
 
       var postResponse = await http.post(
         Uri.parse("http://127.0.0.1:3000/messagesBetweenTwoUsers"),
-        body: jsonEncode(messagesModel.senderReceiverToMessagesMap),
+        body: jsonEncode(messagesModel.conversationsMap),
         headers: <String, String>{'Content-Type': 'application/json'},
       );
     }
